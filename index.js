@@ -24,7 +24,7 @@ window.loadLeverJobs = function (options) {
     return string.replace(/\s+/ig, "");
   }
 
-  // Replace "leverdemo" with your own company name
+  // Adding the account name to the API URL
   var url = 'https://api.lever.co/v0/postings/' + options.accountName + '?group=team&mode=json';
 
   function createJobs(_data) {
@@ -70,7 +70,7 @@ window.loadLeverJobs = function (options) {
 
       head.appendChild(link);
     }
-    addCss('https://dl.dropbox.com/s/7de8zvhboq82yoc/style.css');
+    addCss('https://andreasmb.github.io/lever-jobs-embed/embed-css/style.css');
   }
 
   var request = new XMLHttpRequest();
