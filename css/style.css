@@ -1,0 +1,123 @@
+* {
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+}
+@font-face {
+  font-family: 'metaboldlf-romanregular';
+  src: url("//www.lever.co/hubfs/webfonts/metaboldlf-webfont.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "metanormallf-capsregular";
+  font-weight: 400;
+  src: url("https://www.lever.co/hubfs/webfonts/metamediumlf-capsregular.ttf"); /* Safari, Android, iOS */
+}
+@font-face {
+  font-family: 'metanormallf-romanregular';
+  src: url("//www.lever.co/hubfs/webfonts/metanormal-webfont.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'metanormallf-italicregular';
+  src: url("//www.lever.co/hubfs/webfonts/metanormalitaliclf-webfont.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+html {
+  font-size: 10px;
+  font-family: 'metanormallf-romanregular', sans-serif;
+}
+body {
+  background: #f9f9f9;
+}
+.wrapper {
+  min-height: 100vh;
+  margin: 0 auto;
+  max-width: 1000px;
+}
+.content {
+  background: #fff;
+  padding: 75px 40px;
+  margin-top: 50px;
+}
+.content img {
+  max-width: 150px;
+  height: auto !important;
+  margin: 0 0 50px 0;
+}
+h1 {
+  font-family: 'metaboldlf-romanregular', sans-serif;
+  margin-bottom: 30px;
+  font-size: 3.6rem;
+}
+p {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+input {
+  border: 1px solid #ebebeb;
+  border-radius: 3px;
+  padding: 0 10px;
+  font-family: 'metanormallf-romanregular', sans-serif;
+  font-size: 1.6rem;
+  height: 40px;
+}
+.subtext {
+  font-size: 1.2rem;
+  opacity: 0.5;
+}
+.error {
+  background: #fa8072;
+}
+.success {
+  background: #ebebeb;
+}
+#code p {
+  padding: 10px;
+  margin: 20px 0;
+}
+#code p {
+  font-family: monospace;
+  line-height: 1.5;
+}
+button,
+.btn {
+  font-family: "metanormallf-capsregular";
+  text-transform: lowercase;
+  letter-spacing: 1px;
+  font-size: 1.6rem;
+  position: relative;
+  display: inline-block;
+  padding: 8px 20px;
+  font-weight: normal;
+  line-height: 1.428571429;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid rgba(0,0,0,0);
+  border-radius: 3px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  -webkit-appearance: none;
+  color: #fff;
+  background: #00a1dc;
+  transition: all 0.3s;
+  vertical-align: top;
+  margin-left: 10px;
+  height: 40px;
+}
+button:hover,
+.btn:hover {
+  background: #0091c6;
+}
+button:active,
+.btn:active {
+  background: #00516e;
+}
