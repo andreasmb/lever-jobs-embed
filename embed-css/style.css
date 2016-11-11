@@ -1,0 +1,66 @@
+#lever-jobs-container {
+  display: block;
+  visibility: visible;
+  opacity: 1;
+  font-family: Helvetica, sans-serif;
+  color: #2c2e2f;
+}
+#lever-jobs-container ul,
+#lever-jobs-container li,
+#lever-jobs-container h1,
+#lever-jobs-container h2,
+#lever-jobs-container h3,
+#lever-jobs-container h4,
+#lever-jobs-container h5,
+#lever-jobs-container h6,
+#lever-jobs-container p,
+#lever-jobs-container span {
+  margin: 0;
+  padding: 0;
+}
+#lever-jobs-container * {
+  box-sizing: border-box;
+}
+#lever-jobs-container ul.lever-jobs-list {
+  margin: 0;
+  padding: 0 0 20px 0;
+  list-style-type: none;
+}
+#lever-jobs-container li.lever-team,
+#lever-jobs-container li.lever-job {
+  text-align: left;
+  display: flex;
+  font-size: 16px;
+  text-decoration: none;
+  padding: 5px 10px;
+  background: none;
+}
+#lever-jobs-container .lever-team {
+  font-size: 20px;
+}
+#lever-jobs-container .lever-job-title {
+  display: inline-block;
+  flex: 0 0 65%;
+  color: #0a94c7;
+  text-decoration: underline;
+}
+#lever-jobs-container .lever-job-title:hover {
+  color: #0985b3;
+}
+#lever-jobs-container .lever-job-title:active {
+  color: #2c2e2f;
+}
+#lever-jobs-container .lever-job-tag {
+  display: inline-block;
+  color: rgba(44,46,47,0.5);
+  flex: 0 0 35%;
+}
+@media (max-width: 767px) {
+  #lever-jobs-container .lever-job-tag,
+  #lever-jobs-container .lever-job-title {
+    flex: 0 0 100%;
+  }
+  #lever-jobs-container .lever-job {
+    flex-wrap: wrap;
+  }
+}

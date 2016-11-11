@@ -1,0 +1,50 @@
+textColor = #2c2e2f
+linkColor = #0a94c7
+breakPoint = 767px
+
+
+#lever-jobs-container
+  display: block
+  visibility: visible
+  opacity: 1
+  font-family: Helvetica, sans-serif
+  color: textColor
+  ul,li,h1,h2,h3,h4,h5,h6,p,span
+    margin: 0
+    padding: 0
+  *
+    box-sizing: border-box
+  ul.lever-jobs-list
+    margin: 0
+    padding: 0 0 20px 0
+    list-style-type: none
+  li.lever-team,
+  li.lever-job
+    text-align: left
+    display: flex
+    font-size: 16px
+    text-decoration: none
+    padding: 5px 10px
+    background: none
+  .lever-team
+    font-size: 20px
+  .lever-job-title
+    display: inline-block
+    flex: 0 0 65%
+    color: linkColor
+    text-decoration: underline
+    &:hover
+      color: darken(linkColor, 10%)
+    &:active
+      color: textColor
+  .lever-job-tag
+    display: inline-block
+    color: rgba(textColor, .5)
+    flex: 0 0 35%
+
+  @media (max-width: breakPoint)
+    .lever-job-tag,
+    .lever-job-title
+      flex: 0 0 100%
+    .lever-job
+      flex-wrap: wrap
