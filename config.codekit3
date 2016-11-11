@@ -9,6 +9,12 @@
 	],
 "creatorBuild": "25444",
 "files": {
+	"\/.gitignore": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/.gitignore",
+		"oF": 0
+		},
 	"\/css\/style.css": {
 		"aP": 0,
 		"bl": 0,
