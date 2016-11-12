@@ -67,6 +67,7 @@ input {
 .subtext {
   font-size: 1.2rem;
   opacity: 0.5;
+  margin-bottom: 20px;
 }
 .error {
   background: #fa8072;
