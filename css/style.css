@@ -57,6 +57,12 @@ p {
   margin-bottom: 10px;
   line-height: 1.5;
 }
+a {
+  color: #00a1dc;
+}
+a:hover {
+  color: #0091c6;
+}
 input {
   border: 1px solid #ebebeb;
   border-radius: 3px;

@@ -1,3 +1,5 @@
+accentBlue = #00A1DC
+
 *
   -webkit-font-smoothing: antialiased
   box-sizing: border-box
@@ -44,6 +46,11 @@ p
   font-size: 1.8rem;
   margin-bottom: 10px;
   line-height: 1.5
+
+a
+  color: accentBlue
+  &:hover
+    color: darken(accentBlue, 10%)
 
 input
   border: 1px solid #ebebeb
@@ -100,7 +107,7 @@ button, .btn
   user-select: none
   -webkit-appearance: none // To fix the button appearance on iPad/iPhone
   color: white
-  background: #00A1DC
+  background: accentBlue
   transition: all .3s
   vertical-align: top
   margin-left: 10px
