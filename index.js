@@ -3,7 +3,6 @@ window.loadLeverJobs = function (options) {
 
   //Checking for potential Lever source or origin parameters
   var pageUrl = window.location.href;
-  console.log("pageUrl", pageUrl);
   var leverParameter = '';
   var trackingPrefix = '?lever-'
 
