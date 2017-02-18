@@ -1,5 +1,16 @@
-
 window.loadLeverJobs = function (options) {
+
+
+  //Checking for potential Lever source or origin parameters
+  var pageUrl = window.location.href;
+  var leverParameter = '';
+  var trackingPrefix = '?lever-'
+
+  if( pageUrl.indexOf(trackingPrefix) >= 0){
+    // Found Lever parameter
+    var pageUrlSplit = pageUrl.split(trackingPrefix);
+    leverParameter = '?lever-'+pageUrlSplit[1];
+  }
 
   var tagsToReplace = {
       '&': '&amp;',
@@ -31,7 +42,7 @@ window.loadLeverJobs = function (options) {
 
     var content = "";
 
-    for(i = 0; i < _data.length; i++) {
+    for(var i = 0; i < _data.length; i++) {
       var title = sanitizeHTML(_data[i].title || 'Uncategorized');
       var titlesanitizeAttribute = sanitizeAttribute(title);
 
@@ -57,10 +68,8 @@ window.loadLeverJobs = function (options) {
     document.getElementById("lever-jobs-container").innerHTML = content;
   }
 
-  console.log("INCLUDECSS", options.includeCss);
   if (options.includeCss) {
     function addCss(fileName) {
-
       var head = document.head
         , link = document.createElement('link');
 
