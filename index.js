@@ -3,6 +3,7 @@ window.loadLeverJobs = function (options) {
 
   //Checking for potential Lever source or origin parameters
   var pageUrl = window.location.href;
+  console.log("pageUrl", pageUrl);
   var leverParameter = '';
   var trackingPrefix = '?lever-'
 
@@ -58,7 +59,7 @@ window.loadLeverJobs = function (options) {
         var commitmentsanitizeAttribute = sanitizeAttribute(commitment);
         var team = (posting.categories.team || 'Uncategorized' );
         var teamsanitizeAttribute = sanitizeAttribute(team);
-        var link = posting.hostedUrl;
+        var link = posting.hostedUrl+leverParameter;
 
         content += '<li class="lever-job ' + teamsanitizeAttribute + ' ' + locationsanitizeAttribute + ' ' + commitmentsanitizeAttribute + '">' +
           '<a class="lever-job-title" href="' + link + '"">' + postingTitle + '</a><span class="lever-job-tag">' + location + '</span></li>';
