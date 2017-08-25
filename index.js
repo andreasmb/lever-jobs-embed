@@ -39,10 +39,15 @@ window.loadLeverJobs = function (options) {
   var url = 'https://api.lever.co/v0/postings/' + options.accountName + '?group=team&mode=json';
 
   function createJobs(_data) {
+    if (!_data) return;
 
     var content = "";
 
     for(var i = 0; i < _data.length; i++) {
+      if (!_data[i]) continue;
+      if (!_data[i].postings) continue;
+      if (!(_data[i].postings.length > 0)) continue;
+
       var title = sanitizeHTML(_data[i].title || 'Uncategorized');
       var titlesanitizeAttribute = sanitizeAttribute(title);
 
