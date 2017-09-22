@@ -52,7 +52,9 @@ window.loadLeverJobs = function (options) {
       var titlesanitizeAttribute = sanitizeAttribute(title);
 
       content += '<ul class="lever-jobs-list ' + titlesanitizeAttribute + '">';
-      content += '<li class="lever-team ' + titlesanitizeAttribute + '"><h3 class="lever-team-title">' + title + '</h3></li>';
+      content += '<li class="lever-team ' + titlesanitizeAttribute + '" id="lever-team-' + titlesanitizeAttribute + '">';
+      content += '<h3 class="lever-team-title">' + title + '</h3>';
+      content += '</li>';
 
       for (j = 0; j < _data[i].postings.length; j ++) {
         var posting = _data[i].postings[j];
