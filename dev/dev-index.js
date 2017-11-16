@@ -3,7 +3,8 @@ window.loadLeverJobs = function (options) {
   //Checking for potential Lever source or origin parameters
   var pageUrl = window.location.href;
   var leverParameter = '';
-  var trackingPrefix = '?lever-'
+  var trackingPrefix = '?lever-';
+  var jobsContainer = document.getElementById("lever-jobs-container") || document.body; // Put content in the body if the jobs container doesn't exist
 
   if( pageUrl.indexOf(trackingPrefix) >= 0){
     // Found Lever parameter
@@ -37,11 +38,14 @@ window.loadLeverJobs = function (options) {
   // Adding the account name to the API URL
   var url = 'https://api.lever.co/v0/postings/' + options.accountName + '?group=team&mode=json';
 
+  //Create an object ordered by department and team
   function createJobs(_data) {
     if (!_data) return;
 
     var content = "";
     var groupedPostings = [];
+
+        console.log("DATA", _data);
 
     for(var i = 0; i < _data.length; i++) {
       if (!_data[i]) continue;
@@ -83,50 +87,60 @@ window.loadLeverJobs = function (options) {
           if (groupedPostings[departmentIndex].teams.map(function(o) { return o.team; }).indexOf(teamsanitizeAttribute) === -1) {
             groupedPostings[departmentIndex].teams.push(newTeamToAdd);
           }
-
         }
-
         function findTeam(element) {
           return element.team == teamsanitizeAttribute;
         }
-
         departmentIndex = groupedPostings.findIndex(findDepartment);
         teamIndex = groupedPostings[departmentIndex].teams.findIndex(findTeam);
         groupedPostings[departmentIndex].teams[teamIndex].postings.push(posting);
 
       }
+
     }
+
+    // Sort by department
+    groupedPostings.sort(function(a, b) {
+      var departmentA=a.department.toLowerCase(), departmentB=b.department.toLowerCase()
+      if (departmentA < departmentB)
+          return -1
+      if (departmentA > departmentB)
+          return 1
+      return 0
+    });
 
     for(var i = 0; i < groupedPostings.length; i++) {
 
-      content += '<ul class="lever-jobs-list ' + groupedPostings[i].department + '">';
-      content += '<li class="lever-department ' + groupedPostings[i].department + '"><h3 class="lever-department-title">' + groupedPostings[i].departmentTitle + '</h3></li>';
+      // If there are no departments used, there is only one "unspecified" department, and we don't have to render that.
+      if (groupedPostings.length >= 2) {
+        var haveDepartments = true;
+      };
+
+      if (haveDepartments) {
+        content += '<section class="lever-department ' + groupedPostings[i].department + '"><h3 class="lever-department-title">' + groupedPostings[i].departmentTitle + '</h3>';
+      };
 
       for (j = 0; j < groupedPostings[i].teams.length; j ++) {
 
-        content += '<li class="lever-team ' + groupedPostings[i].teams[j].team + '"><h4 class="lever-team-title">' + groupedPostings[i].teams[j].teamTitle + '</h4></li>';
+        content += '<ul class="lever-team ' + groupedPostings[i].teams[j].team + '"><li class="lever-team"><h4 class="lever-team-title">' + groupedPostings[i].teams[j].teamTitle + '</h4></li>';
 
         for (var k = 0; k < groupedPostings[i].teams[j].postings.length; k ++) {
           content += '<li class="lever-job ' + sanitizeAttribute(groupedPostings[i].teams[j].postings[k].categories.team) + ' ' + sanitizeAttribute(groupedPostings[i].teams[j].postings[k].categories.location) + ' ' + sanitizeAttribute(groupedPostings[i].teams[j].postings[k].categories.commitment) + '">' +
           '<a class="lever-job-title" href="' + groupedPostings[i].teams[j].postings[k].hostedUrl + '"">' + groupedPostings[i].teams[j].postings[k].text + '</a><span class="lever-job-tag">' + (groupedPostings[i].teams[j].postings[k].categories.location || '') + '</span></li>';
           //TODO – need to order depts/teams/postings alphabetically
-          // TODO - need to check what will happen if the company doesn't use departments
         }
 
+        content += '</ul>';
+
       }
-
-
-
+      if (haveDepartments) {
+        content += '</section>';
+      };
     }
 
-
-    // content += '<ul class="lever-jobs-list ' + titlesanitizeAttribute + '">';
-    // content += '<li class="lever-team ' + titlesanitizeAttribute + '"><h3 class="lever-team-title">' + title + '</h3></li>';
-
-    // content += '<li class="lever-job ' + teamsanitizeAttribute + ' ' + locationsanitizeAttribute + ' ' + commitmentsanitizeAttribute + '">' +
-    // '<a class="lever-job-title" href="' + link + '"">' + postingTitle + '</a><span class="lever-job-tag">' + location + '</span></li>';
     content += '</ul>';
-    document.getElementById("lever-jobs-container").innerHTML = content;
+
+    jobsContainer.innerHTML = content;
     console.log("groupedPostings", groupedPostings);
   }
 
@@ -153,11 +167,13 @@ window.loadLeverJobs = function (options) {
       createJobs(request.response);
     } else {
       console.log("Error fetching jobs.");
+      jobsContainer.innerHTML = "<p class='lever-error'>Error fetching jobs.</p>";
     }
   };
 
   request.onerror = function() {
     console.log("Error fetching jobs.");
+    jobsContainer.innerHTML = "<p class='lever-error'>Error fetching jobs.</p>";
   };
 
   request.send();
