@@ -4,7 +4,8 @@ window.loadLeverJobs = function (options) {
   var pageUrl = window.location.href;
   var leverParameter = '';
   var trackingPrefix = '?lever-';
-  var jobsContainer = document.getElementById("lever-jobs-container") || document.body; // Put content in the body if the jobs container doesn't exist
+  // Define the container where we will put the content (or put in the body)
+  var jobsContainer = document.getElementById("lever-jobs-container") || document.body;
 
   if( pageUrl.indexOf(trackingPrefix) >= 0){
     // Found Lever parameter
@@ -44,8 +45,6 @@ window.loadLeverJobs = function (options) {
 
     var content = "";
     var groupedPostings = [];
-
-        console.log("DATA", _data);
 
     for(var i = 0; i < _data.length; i++) {
       if (!_data[i]) continue;
@@ -141,7 +140,6 @@ window.loadLeverJobs = function (options) {
     content += '</ul>';
 
     jobsContainer.innerHTML = content;
-    console.log("groupedPostings", groupedPostings);
   }
 
   if (options.includeCss) {
