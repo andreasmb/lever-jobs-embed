@@ -13,14 +13,20 @@ window.loadLeverJobs = function (options) {
     leverParameter = '?lever-'+pageUrlSplit[1];
   }
 
-  var tagsToReplace = {
+  var htmlTagsToReplace = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;'
+  };
+
+  var attributeTagsToReplace = {
       '&': '&amp;',
       '<': '&lt;',
       '>': '&gt;'
   };
 
   function replaceTag(tag) {
-      return tagsToReplace[tag] || tag;
+      return htmlTagsToReplace[tag] || tag;
   }
 
   function sanitizeHTML(str) {
@@ -30,7 +36,7 @@ window.loadLeverJobs = function (options) {
   //Functions for checking if the variable is unspecified and removing script tags + null check
   function sanitizeAttribute(string) {
     if (string == '' || typeof string == 'undefined' ) {
-      return;
+      return 'uncategorized';
     }
     string = sanitizeHTML(string);
     return string.replace(/\s+/ig, "");
@@ -57,17 +63,11 @@ window.loadLeverJobs = function (options) {
 
       for (j = 0; j < _data[i].postings.length; j ++) {
         var posting = _data[i].postings[j];
-        var postingTitle = sanitizeHTML(posting.text);
-        var location = (posting.categories.location || 'Uncategorized');
-        var locationsanitizeAttribute = sanitizeAttribute(location);
-        var commitment = (posting.categories.commitment || 'Uncategorized');
-        var commitmentsanitizeAttribute = sanitizeAttribute(commitment);
         var team = (posting.categories.team || 'Uncategorized' );
         var teamsanitizeAttribute = sanitizeAttribute(team);
         var department = (posting.categories.department || 'Uncategorized' );
         var departmentsanitizeAttribute = sanitizeAttribute(department);
         var link = posting.hostedUrl+leverParameter;
-
 
         function findDepartment(element) {
           return element.department == departmentsanitizeAttribute;
@@ -116,20 +116,21 @@ window.loadLeverJobs = function (options) {
       };
 
       if (haveDepartments) {
-        content += '<section class="lever-department ' + groupedPostings[i].department + '"><h3 class="lever-department-title">' + groupedPostings[i].departmentTitle + '</h3>';
+        content += '<section class="lever-department" data-department-title="' + groupedPostings[i].department + '"><h3 class="lever-department-title">' + sanitizeHTML(groupedPostings[i].departmentTitle) + '</h3>';
       };
 
       for (j = 0; j < groupedPostings[i].teams.length; j ++) {
 
-        content += '<ul class="lever-team ' + groupedPostings[i].teams[j].team + '"><li class="lever-team"><h4 class="lever-team-title">' + groupedPostings[i].teams[j].teamTitle + '</h4></li>';
+        // console.log()
+
+        content += '<ul class="lever-team" data-team="' + groupedPostings[i].teams[j].team + '"><li><h4 class="lever-team-title">' + sanitizeHTML(groupedPostings[i].teams[j].teamTitle) + '</h4><ul>';
 
         for (var k = 0; k < groupedPostings[i].teams[j].postings.length; k ++) {
-          content += '<li class="lever-job ' + sanitizeAttribute(groupedPostings[i].teams[j].postings[k].categories.team) + ' ' + sanitizeAttribute(groupedPostings[i].teams[j].postings[k].categories.location) + ' ' + sanitizeAttribute(groupedPostings[i].teams[j].postings[k].categories.commitment) + '">' +
-          '<a class="lever-job-title" href="' + groupedPostings[i].teams[j].postings[k].hostedUrl + '"">' + groupedPostings[i].teams[j].postings[k].text + '</a><span class="lever-job-tag">' + (groupedPostings[i].teams[j].postings[k].categories.location || '') + '</span></li>';
-          //TODO – need to order depts/teams/postings alphabetically
+          content += '<li class="lever-job" data-team="' + groupedPostings[i].teams[j].postings[k].categories.team + '" data-location="' + groupedPostings[i].teams[j].postings[k].categories.location) + '"data-work-type="' + sanitizeAttribute(groupedPostings[i].teams[j].postings[k].categories.commitment) + '">' +
+          '<a class="lever-job-title" href="' + groupedPostings[i].teams[j].postings[k].hostedUrl + '"">' + sanitizeHTML(groupedPostings[i].teams[j].postings[k].text) + '</a><span class="lever-job-tag">' + (sanitizeHTML(groupedPostings[i].teams[j].postings[k].categories.location || '')) + '</span></li>';
         }
 
-        content += '</ul>';
+        content += '</ul></li></ul>';
 
       }
       if (haveDepartments) {
@@ -138,7 +139,6 @@ window.loadLeverJobs = function (options) {
     }
 
     content += '</ul>';
-
     jobsContainer.innerHTML = content;
   }
 
