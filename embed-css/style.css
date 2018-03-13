@@ -4,7 +4,6 @@
   opacity: 1;
   font-family: Helvetica, sans-serif;
   color: #2c2e2f;
-  font-size: 16px;
 }
 #lever-jobs-container ul,
 #lever-jobs-container li,
@@ -24,26 +23,20 @@
 }
 #lever-jobs-container ul.lever-jobs-list {
   margin: 0;
-  padding: 0;
+  padding: 0 0 20px 0;
   list-style-type: none;
 }
+#lever-jobs-container li.lever-team,
 #lever-jobs-container li.lever-job {
   text-align: left;
   display: flex;
+  font-size: 16px;
   text-decoration: none;
-  padding: 0.2em 0;
+  padding: 5px 10px;
   background: none;
 }
 #lever-jobs-container .lever-team {
-  margin-bottom: 1.5em;
-}
-#lever-jobs-container .lever-team-title {
-  font-size: 1.25em;
-  margin-bottom: 0.5em;
-}
-#lever-jobs-container .lever-department-title {
-  font-size: 1.5em;
-  margin-bottom: 0.5em;
+  font-size: 20px;
 }
 #lever-jobs-container .lever-job-title {
   display: inline-block;
