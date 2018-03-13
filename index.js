@@ -39,23 +39,27 @@ window.loadLeverJobs = function (options) {
   var url = 'https://api.lever.co/v0/postings/' + options.accountName + '?group=team&mode=json';
 
   function createJobs(_data) {
-    if (!_data) return;
+    var responseData = _data;
+    if (!responseData) return;
+    if(typeof responseData === "string") {
+      responseData = JSON.parse(responseData);
+    }
 
     var content = "";
 
-    for(var i = 0; i < _data.length; i++) {
-      if (!_data[i]) continue;
-      if (!_data[i].postings) continue;
-      if (!(_data[i].postings.length > 0)) continue;
+    for(var i = 0; i < responseData.length; i++) {
+      if (!responseData[i]) continue;
+      if (!responseData[i].postings) continue;
+      if (!(responseData[i].postings.length > 0)) continue;
 
-      var title = sanitizeHTML(_data[i].title || 'Uncategorized');
+      var title = sanitizeHTML(responseData[i].title || 'Uncategorized');
       var titlesanitizeAttribute = sanitizeAttribute(title);
 
       content += '<ul class="lever-jobs-list ' + titlesanitizeAttribute + '">';
       content += '<li class="lever-team ' + titlesanitizeAttribute + '"><h3 class="lever-team-title">' + title + '</h3></li>';
 
-      for (j = 0; j < _data[i].postings.length; j ++) {
-        var posting = _data[i].postings[j];
+      for (j = 0; j < responseData[i].postings.length; j ++) {
+        var posting = responseData[i].postings[j];
         var postingTitle = sanitizeHTML(posting.text);
         var location = (posting.categories.location || 'Uncategorized');
         var locationsanitizeAttribute = sanitizeAttribute(location);
