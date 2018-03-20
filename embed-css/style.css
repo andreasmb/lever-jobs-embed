@@ -37,25 +37,29 @@
 #lever-jobs-container .lever-team {
   margin-bottom: 1.5em;
 }
+#lever-jobs-container .lever-department {
+  margin-bottom: 3em;
+}
 #lever-jobs-container .lever-team-title {
   font-size: 1.25em;
   margin-bottom: 0.5em;
 }
 #lever-jobs-container .lever-department-title {
   font-size: 1.5em;
-  margin-bottom: 0.5em;
+  margin-bottom: 1em;
 }
 #lever-jobs-container .lever-job-title {
   display: inline-block;
   flex: 0 0 65%;
-  color: #0a94c7;
+  color: #0c92f3;
   text-decoration: underline;
+  margin-bottom: 0.2em;
 }
 #lever-jobs-container .lever-job-title:hover {
-  color: #0985b3;
+  color: #0068b3;
 }
 #lever-jobs-container .lever-job-title:active {
-  color: #2c2e2f;
+  color: #003459;
 }
 #lever-jobs-container .lever-job-tag {
   display: inline-block;
