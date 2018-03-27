@@ -22,9 +22,7 @@
 #lever-jobs-container * {
   box-sizing: border-box;
 }
-#lever-jobs-container ul.lever-jobs-list {
-  margin: 0;
-  padding: 0;
+#lever-jobs-container ul {
   list-style-type: none;
 }
 #lever-jobs-container li.lever-job {
