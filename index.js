@@ -185,7 +185,7 @@ window.loadLeverJobs = function (options) {
 window.loadLeverJobs(window.leverJobsOptions);
 
 
-// IE polyfill for findIndex
+// IE polyfill for findIndex - found at https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex
 
 if (!Array.prototype.findIndex) {
   Object.defineProperty(Array.prototype, 'findIndex', {
