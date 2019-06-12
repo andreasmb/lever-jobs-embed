@@ -129,8 +129,8 @@ window.loadLeverJobs = function (options) {
         content += '<ul class="lever-team" data-team="' + groupedPostings[i].teams[j].teamTitle + '"><li><h4 class="lever-team-title">' + sanitizeForHTML(groupedPostings[i].teams[j].teamTitle) + '</h4><ul>';
 
         for (var k = 0; k < groupedPostings[i].teams[j].postings.length; k ++) {
-          content += '<li class="lever-job" data-team="' + groupedPostings[i].teams[j].postings[k].categories.team + '" data-location="' + groupedPostings[i].teams[j].postings[k].categories.location + '"data-work-type="' + groupedPostings[i].teams[j].postings[k].categories.commitment + '">' +
-          '<a class="lever-job-title" href="' + groupedPostings[i].teams[j].postings[k].hostedUrl + '"">' + sanitizeForHTML(groupedPostings[i].teams[j].postings[k].text) + '</a><span class="lever-job-tag">' + (sanitizeForHTML(groupedPostings[i].teams[j].postings[k].categories.location) || '') + '</span></li>';
+          content += '<li class="lever-job" data-department="' + groupedPostings[i].departmentTitle +'" data-team="' + groupedPostings[i].teams[j].postings[k].categories.team + '" data-location="' + groupedPostings[i].teams[j].postings[k].categories.location + '"data-work-type="' + groupedPostings[i].teams[j].postings[k].categories.commitment + '">' +
+          '<a class="lever-job-title" href="' + groupedPostings[i].teams[j].postings[k].hostedUrl + '">' + sanitizeForHTML(groupedPostings[i].teams[j].postings[k].text) + '</a><span class="lever-job-tag">' + (sanitizeForHTML(groupedPostings[i].teams[j].postings[k].categories.location) || '') + '</span></li>';
         }
 
         content += '</ul></li></ul>';
@@ -143,6 +143,7 @@ window.loadLeverJobs = function (options) {
 
     content += '</ul>';
     jobsContainer.innerHTML = content;
+    window.dispatchEvent(new Event('leverJobsRendered'));
   }
 
   if (options.includeCss) {
@@ -183,6 +184,7 @@ window.loadLeverJobs = function (options) {
 };
 
 window.loadLeverJobs(window.leverJobsOptions);
+
 
 
 // IE polyfill for findIndex - found at https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex
@@ -232,3 +234,21 @@ if (!Array.prototype.findIndex) {
     writable: true
   });
 }
+
+// IE Polyfill for New Event
+
+(function () {
+
+  if ( typeof window.CustomEvent === "function" ) return false;
+
+  function CustomEvent ( event, params ) {
+    params = params || { bubbles: false, cancelable: false, detail: undefined };
+    var evt = document.createEvent( 'CustomEvent' );
+    evt.initCustomEvent( event, params.bubbles, params.cancelable, params.detail );
+    return evt;
+   }
+
+  CustomEvent.prototype = window.Event.prototype;
+
+  window.CustomEvent = CustomEvent;
+})();

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="../embed-css/style.css" media="screen" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+</head>
+
+<style>
+.selected {
+  background: coral;
+  border:1px solid salmon;
+}
+#new-list {
+  display: block;
+  visibility: visible;
+  opacity: 1;
+  font-family: Helvetica, sans-serif;
+  color: #2c2e2f;
+  font-size: 16px;
+}
+#new-list ul,
+#new-list li,
+#new-list h1,
+#new-list h2,
+#new-list h3,
+#new-list h4,
+#new-list h5,
+#new-list h6,
+#new-list p,
+#new-list span {
+  margin: 0;
+  padding: 0;
+}
+#new-list * {
+  box-sizing: border-box;
+}
+#new-list ul {
+  list-style-type: none;
+}
+#new-list li.lever-job {
+  text-align: left;
+  display: flex;
+  text-decoration: none;
+  padding: 0.2em 0;
+  background: none;
+}
+#new-list .lever-team {
+  margin-bottom: 1.5em;
+}
+#new-list .lever-department {
+  margin-bottom: 3em;
+}
+#new-list .lever-team-title {
+  font-size: 1.25em;
+  margin-bottom: 0.5em;
+}
+#new-list .lever-job-title {
+  display: inline-block;
+  flex: 0 0 65%;
+  color: #0c92f3;
+  text-decoration: underline;
+  margin-bottom: 0.2em;
+}
+#new-list .lever-job-title:hover {
+  color: #0068b3;
+}
+#new-list .lever-job-title:active {
+  color: #003459;
+}
+#new-list .lever-job-tag {
+  display: inline-block;
+  color: rgba(44,46,47,0.5);
+  flex: 0 0 35%;
+}
+@media (max-width: 767px) {
+  #new-list .lever-job-tag,
+  #new-list .lever-job-title {
+    flex: 0 0 100%;
+  }
+  #new-list .lever-job {
+    flex-wrap: wrap;
+  }
+}
+#lever-jobs-search {
+  font-size: 16px;
+  padding: 0.5em;
+  border-radius: 3px;
+  border: 1px solid #E3E4E6;
+}
+/* #lever-jobs-filter .lever-job-filter {
+  display: none;
+  position: absolute;
+  z-index: 9;
+  padding: 0.5em;
+}
+#lever-jobs-filter h5:hover ~ .lever-job-filter {
+  display: block;
+}
+#lever-jobs-filter >div:hover .lever-job-filter {
+  display: block;
+}
+
+#lever-jobs-filter .lever-job-filter {
+  background-color: #f0f1f2;
+}
+#lever-jobs-filter .lever-job-filter:hover {
+  background-color: #d7d7d9;
+  display: block;
+}
+#lever-jobs-filter .lever-job-filter:active {
+  background-color: #BFE5FF;
+} */
+
+</style>
+
+<h1>Test page with list.js</h1>
+
+
+<div id="new-list">
+  <input id="lever-jobs-search" class="search" placeholder="Search" />
+  <!-- <span class="sort" data-sort="lever-job-title">Sort by name</span>
+  <span class="sort" data-sort="team">Sort by team</span>
+  <span class="sort" data-sort="location">Sort by location</span> -->
+  <div id="lever-jobs-filter">
+    <select class="lever-jobs-filter-locations">
+      <option value="" disabled selected>Filter by location</option>
+    </select>
+    <select class="lever-jobs-filter-departments">
+      <option value="" disabled selected>Filter by department</option>
+    </select>
+    <select class="lever-jobs-filter-teams">
+      <option value="" disabled selected>Filter by team</option>
+    </select>
+    <select class="lever-jobs-filter-work-types">
+      <option value="" disabled selected>Filter by work type</option>
+    </select>
+    <a id="lever-clear-filters" style="display: none;">Clear filters</a>
+  </div>
+  <ul class="list">
+  </ul>
+  <div id="lever-no-results" style="display: none;">No results</div>
+</div>
+
+<div id='lever-jobs-container'></div>
+
+
+
+
+<script type='text/javascript'>window.leverJobsOptions = {accountName: 'Levertest', includeCss: false};</script>
+<script src="../index.js"></script>
+
+<script type='text/javascript'>
+
+  window.addEventListener('leverJobsRendered', function() {
+
+       $(".lever-job").clone().appendTo("#new-list ul");
+
+       var options = {
+         valueNames: [
+           'lever-job-title',
+           { data: ['location'] },
+           { data: ['department'] },
+           { data: ['team'] },
+           { data: ['work-type'] }
+         ]
+       };
+
+        var jobList = new List('new-list', options);
+
+        console.log("joblist", jobList);
+
+        var locations = [];
+        var departments = [];
+        var teams = [];
+        var workTypes = [];
+        for (var i = 0; i < jobList.items.length; i++) {
+          var item = jobList.items[i]._values;
+          var location = item.location;
+          if(jQuery.inArray(location, locations) == -1) {
+            locations.push(location);
+          }
+          var department = item.department;
+          if(jQuery.inArray(department, departments) == -1) {
+            departments.push(department);
+          }
+          var team = item.team;
+          if(jQuery.inArray(team, teams) == -1) {
+            teams.push(team);
+          }
+          var workType = item["work-type"];
+          if(jQuery.inArray(workType, workTypes) == -1) {
+            workTypes.push(workType);
+          }
+        }
+
+      locations.sort();
+      departments.sort();
+      teams.sort();
+      workTypes.sort();
+      for (var j = 0; j < locations.length; j++ ) {
+          $( "#lever-jobs-filter .lever-jobs-filter-locations").append('<option>' + locations[j] + '</option>');
+      }
+      for (var j = 0; j < departments.length; j++ ) {
+          $( "#lever-jobs-filter .lever-jobs-filter-departments").append('<option class=department>' + departments[j] + '</option>');
+      }
+      for (var j = 0; j < teams.length; j++ ) {
+          $( "#lever-jobs-filter .lever-jobs-filter-teams").append('<option>' + teams[j] + '</option>');
+      }
+      for (var j = 0; j < workTypes.length; j++ ) {
+          $( "#lever-jobs-filter .lever-jobs-filter-work-types").append('<option>' + workTypes[j] + '</option>');
+      }
+
+      console.log("locations", locations);
+      console.log("departments", departments);
+      console.log("teams", teams);
+      console.log("workTypes", workTypes);
+
+      function showFilterResults() {
+        $('#new-list .list').show();
+        $('#lever-jobs-container').hide();
+      }
+      function hideFilterResults() {
+        $('#new-list .list').hide();
+        $('#lever-jobs-container').show();
+      }
+
+      // Show the unfiltered list by default
+      hideFilterResults();
+
+     $('#lever-jobs-filter select').change(function(){
+
+      var selectedFilters = {
+        location: $('#lever-jobs-filter select.lever-jobs-filter-locations').val(),
+        department: $('#lever-jobs-filter select.lever-jobs-filter-departments').val(),
+        team: $('#lever-jobs-filter select.lever-jobs-filter-teams').val(),
+        'work-type': $('#lever-jobs-filter select.lever-jobs-filter-work-types').val(),
+      }
+
+      //Filter the list
+      jobList.filter(function(item) {
+        var itemValue = item.values();
+        // Check the itemValue against all filter properties (location, team, work-type).
+        for (var filterProperty in selectedFilters) {
+          var selectedFilterValue = selectedFilters[filterProperty];
+
+          // For a <select> that has no option selected, JQuery's val() will return null.
+          // We only want to compare properties where the user has selected a filter option,
+          // which is when selectedFilterValue is not null.
+          if (selectedFilterValue !== null) {
+            if (itemValue[filterProperty] !== selectedFilterValue) {
+              // Found mismatch with a selected filter, can immediately exclude this item.
+              return false;
+            }
+          }
+        }
+        // This item passes all selected filters, include this item.
+        return true;
+      });
+
+      //Show the 'no results' message if there are no matching results
+      if (jobList.visibleItems.length >= 1) {
+        $('#lever-no-results').hide();
+      }
+      else {
+        $('#lever-no-results').show();
+      }
+
+      console.log("filtered?", jobList.filtered);
+
+
+      $('#lever-clear-filters').show();
+
+      //
+      // if (jobList.filtered == true && $('#lever-jobs-search').val().length == 0) {
+      //   console.log("can clear filters");
+      //   $('#lever-clear-filters').show();
+      // }
+
+      //Show the list with filtered results
+      showFilterResults();
+
+    });
+
+
+    $('#new-list').on('click', '#lever-clear-filters', function() {
+      console.log("clicked clear filters");
+      jobList.filter();
+      console.log("jobList filtered?", jobList.filtered);
+      if (jobList.filtered == false) {
+        hideFilterResults();
+      }
+      $('#lever-jobs-filter select').prop('selectedIndex',0);
+      $('#lever-clear-filters').hide();
+      $('#lever-no-results').hide();
+    });
+
+     // Showing/hiding search results when the search box is empty
+     $('#new-list').on('input', '#lever-jobs-search', function() {
+        if($(this).val().length || jobList.filtered == true) {
+          showFilterResults();
+          if (jobList.visibleItems.length >= 1) {
+            $('#lever-no-results').hide();
+          } else {
+            $('#lever-no-results').show();
+          }
+        } else {
+          hideFilterResults();
+          $('#lever-no-results').hide();
+        }
+      });
+
+  })
+
+
+</script>
+
+</html>
