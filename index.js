@@ -4,7 +4,7 @@ window.loadLeverJobs = function (options) {
   var pageUrl = window.location.href;
   var leverParameter = '';
   var trackingPrefix = '?lever-';
-  options.accountName = options.accountName.toLowerCase();
+  options.accountName = options.accountName;
   // Define the container where we will put the content (or put in the body)
   var jobsContainer = document.getElementById("lever-jobs-container") || document.body;
 
